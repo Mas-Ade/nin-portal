@@ -11,20 +11,18 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter basename="/">
-      <Routes>
-        <Route path="/login" element={<Login />}></Route>
-        {/* path "/" dan element App merupakan parent dari route  */}
+  <BrowserRouter basename="/">
+    <Routes>
+      <Route path="/login" element={<Login />}></Route>
+      {/* path "/" dan element App merupakan parent dari route  */}
 
-        <Route path="/" element={<App />}>
-          {/* path trial dan home merupakan child dari path "/" */}
-          <Route path="/trial" element={<Trial />} />
-          <Route path="/home" element={<Home />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  </React.StrictMode>
+      <Route path="/" element={<App />}>
+        {/* path trial dan home merupakan child dari path "/" */}
+        <Route path="/trial" element={<Trial />} />
+        <Route path="/home" element={<Home />} />
+      </Route>
+    </Routes>
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

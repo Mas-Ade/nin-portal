@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import BASE_URLAPI from "../config/base.url";
+import { BASE_URLAPI, localApi } from "../config";
+
 import axios from "axios";
 
 const Login = () => {
@@ -9,6 +10,7 @@ const Login = () => {
     password: "",
   });
   const endpoint = "/api/login";
+  const local = "/v1/user/login";
 
   const navigate = useNavigate();
 
@@ -25,8 +27,8 @@ const Login = () => {
 
     console.log(data);
     try {
-      const response = await axios.post(`${BASE_URLAPI}` + `${endpoint}`, data);
-      const token = response.data.token;
+      const response = await axios.post(`${localApi}` + `${local}`, data);
+      const token = response.data.data;
       console.log(token);
       if (!token) {
         alert("username dan password tidak sesuai");

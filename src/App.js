@@ -2,11 +2,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import AuthNavbar from "./auth/navbar/AuthNavbar";
+import AuthNavbar_user from "./auth/navbar/AuthNavbar.user";
 import AuthFooter from "./auth/footer/AuthFooter";
 import "bootstrap/dist/css/bootstrap.min.css";
+import jwtDecode from "jwt-decode";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [auth, setAuth] = useState("");
   const navigate = useNavigate();
 
   const checkUserToken = () => {
@@ -16,23 +19,30 @@ function App() {
       navigate("/login");
     }
     console.log("data token : ", userToken);
-    setIsLoggedIn(true);
+    let decode = jwtDecode(userToken);
+    // setIsLoggedIn(true);
+    // setAuth(decode.roleUser);
+    if (decode.roleUser === "admin") {
+      setIsLoggedIn(true);
+    }
+    // console.log(decode.roleUser);
   };
 
   useEffect(() => {
     checkUserToken();
-  }, [isLoggedIn]);
+    console.log(isLoggedIn);
+  }, []);
 
   return (
-    <React.Fragment>
+    <div>
       <h6> #source app </h6>
-      {isLoggedIn && <AuthNavbar />}
+      {isLoggedIn ? <AuthNavbar_user /> : <AuthNavbar />}
       <Outlet />
-      {isLoggedIn && <AuthFooter />}
+      <AuthFooter />
       {/* {isLoggedIn && <PortalNavbar />}
       <Outlet />
       {isLoggedIn && <PortalFooter />} */}
-    </React.Fragment>
+    </div>
   );
 }
 
